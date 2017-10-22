@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import logging
 import file_uploader
+import datetime
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -20,8 +21,11 @@ def on_message(client, userdata, msg):
     # maybe dump it to a file first to test
     data = msg.payload
     print("Got something something")
-    file_uploader.uploadFileToS3(data)
+    fileName = getPictureName() 
+    file_uploader.uploadFileToS3(data, 'test.jpg')
 
+def getPictureName():
+    return datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S") + ".jpg"
 
 client = mqtt.Client("PicServer")
 client.on_connect = on_connect

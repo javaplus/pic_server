@@ -17,7 +17,7 @@ def writeToFile(fileData):
         file.write(fileData)
     
 
-def uploadFileToS3(fileData):
+def uploadFileToS3(fileData, fileName):
     # Let's use Amazon S3
     s3 = boto3.resource('s3')
 
@@ -27,5 +27,5 @@ def uploadFileToS3(fileData):
     
     # Upload a new file
     data = io.BytesIO(fileData)
-    s3.Bucket('pb-pics').put_object(Key='test.jpg', Body=data)
+    s3.Bucket('pb-pics').put_object(Key=fileName, Body=data)
     
