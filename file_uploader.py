@@ -1,6 +1,6 @@
 import requests
 import io
-
+import boto3
 
 def uploadFile(fileData):
     # create temp file:
@@ -15,4 +15,17 @@ def uploadFile(fileData):
 def writeToFile(fileData):
     with io.FileIO('./test.jpg', 'w') as file:
         file.write(fileData)
+    
+
+def uploadFileToS3(fileData):
+    # Let's use Amazon S3
+    s3 = boto3.resource('s3')
+
+    # Print out bucket names
+    for bucket in s3.buckets.all():
+        print(bucket.name)
+    
+    # Upload a new file
+    data = io.BytesIO(fileData)
+    s3.Bucket('pb-pics').put_object(Key='test.jpg', Body=data)
     

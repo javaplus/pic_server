@@ -20,7 +20,7 @@ def on_message(client, userdata, msg):
     # maybe dump it to a file first to test
     data = msg.payload
     print("Got something something")
-    file_uploader.uploadFile(data)
+    file_uploader.uploadFileToS3(data)
 
 
 client = mqtt.Client("PicServer")
